@@ -5,7 +5,7 @@ Example pipeline
 - lock
 */
 
-agent("ubuntu") {
+node("ubuntu") {
     stage('Build') {
         withCredentials(
             [usernamePassword(

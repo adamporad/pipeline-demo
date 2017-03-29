@@ -5,7 +5,10 @@ Example pipeline
 */
 
 @Library("pipeline-demo")
-agent("ubuntu") {
+import com.pipeline-demo
+
+
+node("ubuntu") {
     stage('Build') {
         withCredentials(
             [usernamePassword(
@@ -68,18 +71,7 @@ agent("ubuntu") {
     }
 
     stage("send notifications") {
-        def buildStatus = currentBuild.result ?: "Success"
-        def mail_subject = "${buildStatus}: ${JOB_NAME} #${BUILD_NUMBER}"
-        def mail_body = """\
-Jenkins ${buildStatus} ${JOB_NAME} #${BUILD_NUMBER} ${buildStatus}
-View build log: ${BUILD_URL}consoleFull"""
-
-
-        echo "Sending mail to: ${mail_to} with subject: ${mail_subject}; body: ${mail_body}"
-
-        mail from: "jenkins@demo.test"
-            to:"engineering@demo.text"
-            subject: "Deploy to Test done"
-            body: "Check the build logs for results"
+        notifier = new notifications()
+        notifier.send_email(currentBuild.result ?: "SUCCESS")
     }
 }

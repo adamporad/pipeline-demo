@@ -4,7 +4,7 @@ Example pipeline
  - credentials, secrets
 */
 
-agent("ubuntu") {
+node("ubuntu") {
     stage('Build') {
         withCredentials(
             [usernamePassword(
