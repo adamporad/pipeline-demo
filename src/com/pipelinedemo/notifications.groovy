@@ -12,7 +12,7 @@ def send_email(buildStatus, message=null, alwaysSendEmailOnSuccess=false, to_add
 
     // Only send email on the first SUCCESSful build after a FAILURE.
     //     Unless sendOnSuccess parameter is true
-    // previousBuild = currentBuild.getPreviousBuild()
+    previousBuild = currentBuild.getPreviousBuild()
     previousBuildResult = previousBuild ? previousBuild.result : ""
     if ((buildStatus == 'SUCCESS')
             && (previousBuildResult == 'SUCCESS')
